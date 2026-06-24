@@ -56,8 +56,9 @@ jobs:
         with:
           name: 24spark-ax3000t-${{ github.sha }}
           path: |
-            buildroot/bin/targets/mediatek/filogic/*.bin
-            buildroot/bin/targets/mediatek/filogic/*.img.gz
+            buildroot/bin/targets/mediatek/filogic/*sysupgrade*
+            buildroot/bin/targets/mediatek/filogic/*factory*
+            buildroot/bin/targets/mediatek/filogic/sha256sums
           retention-days: 30
 
       - name: Create release
