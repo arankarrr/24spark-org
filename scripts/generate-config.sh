@@ -6,6 +6,13 @@ set -e
 
 FILES_DIR="${1:-files}"
 
+# Defaults (used when GitHub Secrets are not set)
+WIFI_SSID="${WIFI_SSID:-24spark}"
+WIFI_PASSWORD="${WIFI_PASSWORD:-24spark2024}"
+WWAN_SSID="${WWAN_SSID:-}"
+WWAN_PASSWORD="${WWAN_PASSWORD:-}"
+ROOT_PASSWORD="${ROOT_PASSWORD:-admin}"
+
 mkdir -p "$FILES_DIR/etc/config"
 mkdir -p "$FILES_DIR/etc/uci-defaults"
 
@@ -45,6 +52,11 @@ config wifi-iface 'default_radio1'
 	option encryption 'psk2'
 	option key '${WIFI_PASSWORD}'
 
+EOF
+
+if [ -n "${WWAN_SSID}" ]; then
+cat >> "$FILES_DIR/etc/config/wireless" << EOF
+
 config wifi-iface 'wifinet2'
 	option device 'radio1'
 	option network 'wwan'
@@ -53,6 +65,7 @@ config wifi-iface 'wifinet2'
 	option encryption 'psk2'
 	option key '${WWAN_PASSWORD}'
 EOF
+fi
 
 # ── Network (LAN + WWAN) ──────────────────────────────────────────────────────
 cat > "$FILES_DIR/etc/config/network" << EOF
