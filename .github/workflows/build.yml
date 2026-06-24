@@ -58,7 +58,8 @@ jobs:
             PROFILE="${DEVICE}" \
             PACKAGES="luci luci-base luci-mod-admin-full luci-app-firewall \
                       luci-app-opkg sing-box curl ca-bundle \
-                      kmod-nft-tproxy kmod-nf-tproxy kmod-nft-fullcone" \
+                      kmod-nft-tproxy kmod-nf-tproxy kmod-nft-fullcone \
+                      kmod-zram zram-swap" \
             FILES="files/" \
             EXTRA_IMAGE_NAME="24spark"
 

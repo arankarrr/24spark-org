@@ -108,6 +108,12 @@ uci commit system
 uci set dhcp.odhcpd.maindhcp='0'
 uci commit dhcp
 
+# Enable zram-swap (64 MB compressed) so LuCI can start alongside sing-box
+if [ -f /etc/init.d/zram-swap ]; then
+  /etc/init.d/zram-swap enable
+  /etc/init.d/zram-swap start
+fi
+
 exit 0
 EOF
 
