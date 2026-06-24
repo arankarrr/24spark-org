@@ -51,6 +51,9 @@ jobs:
         working-directory: buildroot
         run: make -j$(nproc) V=s 2>&1 | tee build.log | tail -50
 
+      - name: List build output
+        run: find buildroot/bin/targets/mediatek/filogic/ -type f | sort
+
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
