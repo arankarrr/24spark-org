@@ -35,6 +35,12 @@ jobs:
           mv immortalwrt-imagebuilder-* imagebuilder
 
       - name: Prepare files overlay
+        env:
+          WIFI_SSID: ${{ secrets.WIFI_SSID }}
+          WIFI_PASSWORD: ${{ secrets.WIFI_PASSWORD }}
+          WWAN_SSID: ${{ secrets.WWAN_SSID }}
+          WWAN_PASSWORD: ${{ secrets.WWAN_PASSWORD }}
+          ROOT_PASSWORD: ${{ secrets.ROOT_PASSWORD }}
         run: |
           mkdir -p imagebuilder/files
           cp -r files/. imagebuilder/files/
@@ -42,6 +48,8 @@ jobs:
           mkdir -p imagebuilder/files/usr/lib/lua/luci/view/themes/24spark
           cp packages/luci-theme-24spark/luasrc/view/themes/24spark/*.htm \
             imagebuilder/files/usr/lib/lua/luci/view/themes/24spark/
+          chmod +x scripts/generate-config.sh
+          ./scripts/generate-config.sh imagebuilder/files
 
       - name: Build image
         working-directory: imagebuilder
